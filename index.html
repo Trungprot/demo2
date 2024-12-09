@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trung luv em</title>
+  <link rel="icon" href="love-letter_1f48c.png">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url(''); /* Replace with your background image path */
+      background-size: cover;
+      background-position: center top;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header img {
+      width: 40%;  /* Adjust the size of the image */
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .button {
+      padding: 12px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #ff6f91;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .button:hover {
+      background-color: #ff4060;
+      transform: scale(1.05);
+    }
+    .popup {
+      position: absolute;
+      width: 220px;
+      height: 100px;
+      background-color: #ff6f91;
+      border: 2px solid #ff4060;
+      border-radius: 15px;
+      box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      animation: popupAnimation 0.6s ease-in-out;
+    }
+    @keyframes popupAnimation {
+      0% {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    .lyrics {
+      font-size: 20px;
+      color: #e455b9fe;
+      margin-top: 50px;
+      text-align: center;
+      display: none;
+      animation: fadeInLyrics 1s ease-in-out;
+    }
+    @keyframes fadeInLyrics {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    .lyrics span {
+      display: block;
+      margin: 10px 0;
+      font-weight: bold;
+      display: none; /* Ẩn tất cả các câu */
+    }
+  </style>
+</head>
+<body>
+  <!-- Phần hình ảnh tiêu đề -->
+  <div class="header">
+    <img src="676624.png" alt="Anh có điều muốn nói">
+    <button class="button" onclick="startPopups()">Nhấn đây nè</button>
+  </div>
+
+  <!-- Lời bài hát -->
+  <div class="lyrics">
+    <span>… Yêu thương sao cho vừa?    </span>
+    <span>Hay anh đang lo thừa?    </span>
+    <span>Cho anh mong như cơm bữa</span>
+    <span>Em đừng xinh như thế nữa </span>
+    <span>… Loạn nhịp cả tim lên rồi</span>
+    <span>Đầu này toàn là em mà thôi</span>
+    <span>Yeah-eh, ee-yeah-eh, ee-yeah (ooh)</span>
+    <span>… Nỗi nhớ em cầu kỳ nên chẳng biết lý do là gì (lý do là gì)</span>
+    <span>Hao tốn hơi nhiều GB nên cần dùng thêm USB (thêm USB)</span>
+    <span>Nỗi nhớ em cầu kỳ nên chẳng biết lý do là gì (lý do là gì)</span>
+    <span>Hao tốn hơi nhiều GB nên cần D-O-M-I-C</span>
+  </div>
+
+  <!-- Nhạc nền (bắt đầu khi nhấn nút) -->
+  <audio id="background-music" loop>
+    <source src="Tran ngap bo nho.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    let popupCount = 0; // Biến đếm số popup
+
+    function createPopup() {
+      // Kiểm tra xem đã tạo đủ 50 popup chưa
+      if (popupCount >= 70) return;
+
+      // Tạo phần tử div
+      const popup = document.createElement('div');
+      popup.className = 'popup';
+      popup.textContent = 'Nhớ nhớ em!';
+
+      // Đặt vị trí ngẫu nhiên
+      const x = Math.random() * (window.innerWidth - 220); // Chiều rộng cửa sổ
+      const y = Math.random() * (window.innerHeight - 100); // Chiều cao cửa sổ
+      popup.style.left = `${x}px`;
+      popup.style.top = `${y}px`;
+
+      // Thêm vào trang
+      document.body.appendChild(popup);
+
+      // Tăng số lượng popup đã tạo
+      popupCount++;
+    }
+
+    function showLyrics() {
+      const lyrics = document.querySelectorAll('.lyrics span');
+      lyrics.forEach((lyric, index) => {
+        setTimeout(() => {
+          lyric.style.display = 'block'; // Hiển thị câu lời bài hát
+        }, index * 1900); // Hiển thị từng câu một, cách nhau 1.5 giây
+      });
+    }
+
+    function startPopups() {
+      // Phát nhạc nền khi nhấn nút
+      const audio = document.getElementById('background-music');
+      audio.play();
+
+      // Hiển thị lời bài hát trước khi tạo popups
+      const lyrics = document.querySelector('.lyrics');
+      lyrics.style.display = 'block';
+      
+      // Hiển thị từng câu lời bài hát
+      showLyrics();
+
+      // Ẩn lời bài hát sau 15 giây và bắt đầu hiển thị các popups
+      setTimeout(() => {
+        lyrics.style.display = 'none';
+        setInterval(createPopup, 300); // Cứ 300ms tạo một cửa sổ mới liên tục
+      }, 29000); // Chờ 15 giây để hiển thị hết tất cả các câu bài hát
+    }
+  </script>
+</body>
+</html>
